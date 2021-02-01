@@ -7,7 +7,10 @@ class Stack {
     this.#store.push(item);
   }
   pop = () => {
-    this.#store.pop();
+    return this.#store.pop();
+  }
+  getLength = () => {
+    return this.#store.length;
   }
 }
 
