@@ -5,7 +5,12 @@ const stackDataController = require("./stackData.controller");
 
 stackDataRouter.post(
   "/",
-  stackDataController.addDataToStack,
+  stackDataController.addItemToStack,
+);
+
+stackDataRouter.delete(
+  "/",
+  stackDataController.removeItemFromStack,
 );
 
 module.exports = stackDataRouter;

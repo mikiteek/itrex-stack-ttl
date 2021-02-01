@@ -3,13 +3,13 @@ const request = require("supertest");
 const app = require("../../server");
 const stack = require("../../modules/stackData/stackData.model");
 const {testData} = require("./stackData.variables");
+jest.mock("../../modules/stackData/stackData.model");
 
 describe("stack data mutation", () => {
   describe("POST /stack/", () => {
-    afterAll(() => {
-      stack.pop();
-    });
     it("should return 201", async () => {
+      const mockPush = jest.fn();
+      stack.push = mockPush;
       await request(app)
         .post("/stack")
         .set('Content-Type', 'application/json')
@@ -17,6 +17,26 @@ describe("stack data mutation", () => {
           data: testData,
         })
         .expect(201);
+    });
+  });
+  describe("DELETE /stack/", () => {
+    it("should return 204", async () => {
+      const mockGetLength = jest.fn(() => 0);
+      stack.getLength = mockGetLength;
+      await request(app)
+        .delete("/stack")
+        .expect(204);
+    });
+    it("should return 200", async () => {
+      const mockGetLength = jest.fn(() => 2);
+      const mockPop = jest.fn(() => "Hello");
+      stack.getLength = mockGetLength;
+      stack.pop = mockPop;
+      const response = await request(app)
+        .delete("/stack")
+        .expect(200);
+
+      expect(response.body).toEqual({item: "Hello"})
     });
   });
 });
