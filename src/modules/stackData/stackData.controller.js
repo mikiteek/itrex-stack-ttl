@@ -1,10 +1,10 @@
-const {stackStore} = require("./stackData.service");
+const stack = require("./stackData.model");
 
 class StackDataController {
   addDataToStack = (req, res, next) => {
     try {
       const {body: {data}} = req;
-      stackStore.push(data);
+      stack.push(data);
 
       return res.status(201).send();
     }
