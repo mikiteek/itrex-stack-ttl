@@ -9,6 +9,10 @@ class TtlData {
   push = ({key, value, ttl=0}) => {
     this.#ttl.push(key, value, null, ttl);
   }
+
+  get = (key) => {
+    return this.#ttl.get(key);
+  }
 }
 
 module.exports = new TtlData();

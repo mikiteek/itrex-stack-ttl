@@ -8,4 +8,9 @@ ttlDataRouter.post(
   ttlDataController.addItemToTtl,
 );
 
+ttlDataRouter.get(
+  "/",
+  ttlDataController.getItemByKey,
+);
+
 module.exports = ttlDataRouter;
