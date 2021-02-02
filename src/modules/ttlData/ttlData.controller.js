@@ -28,7 +28,7 @@ class TtlDataController {
       if (value === null) {
         return res.status(404).json({message: "Not found, or value is empty"});
       }
-      return res.status(200).json({key: value});
+      return res.status(200).json({value});
     }
     catch (error) {
       next(error);
