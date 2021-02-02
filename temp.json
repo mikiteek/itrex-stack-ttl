@@ -1,0 +1,225 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is an application for storing data in stack and with TTL supporting",
+    "version": "1.0.2",
+    "title": "ITRex stack, TTL",
+    "contact": {
+      "email": "mikiteek@gmail.com"
+    },
+    "license": {
+      "name": "FS29 and FS31",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "schemes": [
+    "http"
+  ],
+  "host": "https://salty-wildwood-10874.herokuapp.com",
+  "basePath": "/",
+  "paths": {
+    "/stack": {
+      "post": {
+        "tags": ["Stack"],
+        "summary": "Add item to stack",
+        "description": "Add item to stack",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "required": true,
+            "description": "Data which you want to add",
+            "schema": {
+              "$ref": "#/definitions/addToStack"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Wrong body properties"
+          },
+          "201": {
+            "description": "Ok"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Stack"],
+        "summary": "Get item in the top of stack, remove one",
+        "description": "Get item in the top of stack, remove one",,
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/StackItem"
+            }
+          },
+          "204": {
+            "description": "No items"
+          }
+        }
+      }
+    },
+    "/ttl/{key}": {
+      "delete": {
+        "tags": ["TTL"],
+        "summary": "Delete item by key",
+        "description": "Delete film by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "type": "string",
+            "required": true,
+            "description": "Key of the item you want to remove"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "204": {
+            "description": "Nothing to remove"
+          }
+        }
+      },
+      "get": {
+        "tags": ["TTL"],
+        "summary": "Get item by key",
+        "description": "Get item by key",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "type": "string",
+            "required": true,
+            "description": "Key of the item you want to get"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not found, or value is empty",
+            "schema": {
+              "type": "object",
+              "example": {
+                "message": "Not found"
+              }
+            }
+          },
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/ttlItemResponse"
+            }
+          }
+        }
+      }
+    },
+    "/films/search": {
+      "get": {
+        "tags": ["Films"],
+        "summary": "Get list of films by query",
+        "description": "Get list of films by query",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "description": "Title of products you want to get",
+            "schema": {
+              "type": "string",
+              "example": "casablanca"
+            }
+          },
+          {
+            "in": "query",
+            "name": "star",
+            "description": "Star's name you want to get films with",
+            "schema": {
+              "type": "string",
+              "example": "george"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad request, check query params"
+          },
+          "404": {
+            "description": "Not found any films by your query"
+          },
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/Films"
+            }
+          }
+        }
+      }
+    },
+    "/films/upload": {
+      "post": {
+        "tags": ["Films"],
+        "summary": "Upload films' data",
+        "description": "Add film",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "films",
+            "required": true,
+            "description": "File with film's data for uploading, only .txt or .json",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Only .txt or .json files. Wrong data into file"
+          },
+          "201": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/Films"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "addToStack": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        }
+      }
+    },
+    "ttlItemResponse": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "StackItem": {
+      "type": "object",
+      "properties": {
+        "item": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

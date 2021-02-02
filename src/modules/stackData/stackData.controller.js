@@ -1,9 +1,14 @@
 const stack = require("./stackData.model");
+const {validateAddToStack} = require("../../utils/validateStackData");
 
 class StackDataController {
   addItemToStack = (req, res, next) => {
     try {
-      const {body: {data}} = req;
+      const {body: {data}, body} = req;
+      const error = validateAddToStack(body);
+      if (error) {
+        return res.status(400).json(error.message);
+      }
       stack.push(data);
 
       return res.status(201).send();

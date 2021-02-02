@@ -2,7 +2,7 @@ const request = require("supertest");
 
 const app = require("../../server");
 const stack = require("../../modules/stackData/stackData.model");
-const {testData} = require("./stackData.variables");
+const {testData, wrongData} = require("./stackData.variables");
 jest.mock("../../modules/stackData/stackData.model");
 
 describe("stack data mutation", () => {
@@ -13,10 +13,15 @@ describe("stack data mutation", () => {
       await request(app)
         .post("/stack")
         .set('Content-Type', 'application/json')
-        .send({
-          data: testData,
-        })
+        .send(testData)
         .expect(201);
+    });
+    it("should return 400", async () => {
+      await request(app)
+        .post("/stack")
+        .set('Content-Type', 'application/json')
+        .send(wrongData)
+        .expect(400);
     });
   });
   describe("DELETE /stack/", () => {
