@@ -9,8 +9,13 @@ ttlDataRouter.post(
 );
 
 ttlDataRouter.get(
-  "/",
+  "/:key",
   ttlDataController.getItemByKey,
+);
+
+ttlDataRouter.delete(
+  "/:key",
+  ttlDataController.removeItemByKey,
 );
 
 module.exports = ttlDataRouter;

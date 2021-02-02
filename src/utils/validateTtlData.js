@@ -10,15 +10,6 @@ const validateAddToTtl = (body) => {
   return validationResult.error;
 }
 
-const validateGetItemByKey = (query) => {
-  const validationSchema = Joi.object({
-    key: Joi.string().required(),
-  });
-  const validationResult = validationSchema.validate(query);
-  return validationResult.error;
-}
-
 module.exports = {
   validateAddToTtl,
-  validateGetItemByKey,
 }

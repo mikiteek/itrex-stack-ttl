@@ -13,6 +13,10 @@ class TtlData {
   get = (key) => {
     return this.#ttl.get(key);
   }
+
+  remove = (key) => {
+    return this.#ttl.del(key);
+  }
 }
 
 module.exports = new TtlData();
