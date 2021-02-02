@@ -4,6 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const stackDataRouter = require("./modules/stackData/stackData.router");
+const ttlDataRouter = require("./modules/ttlData/ttlData.router");
 
 const errorMiddleware = require("./middleware/errorMiddleware");
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(morgan("combined"));
 
 app.use("/stack", stackDataRouter);
+app.use("/ttl", ttlDataRouter);
 
 app.use(errorMiddleware);
 
